@@ -23,7 +23,7 @@ class PublicUserApiTests(TestCase):
         payload = {
             'email': 'test@simon.com',
             'password': 'testpass',
-            'name': 'Test name'
+            'name': 'name',
         }
         res = self.client.post(CREATE_USER_URL, payload)
 
@@ -35,7 +35,7 @@ class PublicUserApiTests(TestCase):
     def test_user_exists(self):
         """test creating a user that already exists fails"""
         payload = {'email': 'test@simon.com', 'password': 'testpass'}
-
+        create_user(**payload)
         res = self.client.post((CREATE_USER_URL, payload))
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
