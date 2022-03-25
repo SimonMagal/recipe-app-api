@@ -26,11 +26,11 @@ class TagViewSet(BaseRecipeAttrViewSet):
     serializer_class = serializers.TagSerializer
 
 
-
 class IngredientViewSet(BaseRecipeAttrViewSet):
     """manage ingredients in database"""
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
+
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """manage recipes in the database"""
@@ -49,3 +49,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return serializers.RecipeDetailSerializer
 
         return self.serializer_class
+
+    def perform_create(self, serializer):
+        """create a new recipe"""
+        serializer.save(user=self.request.user)
